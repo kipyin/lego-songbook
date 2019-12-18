@@ -1,0 +1,57 @@
+---
+layout: default
+---
+
+<div class="page">
+  <h1 class="page-title">{{ page.title }}</h1>
+
+  {%- assign service_date = page.title | slice: 0, 10 -%}
+  {%- assign services = site.data.past_services | where: "date", service_date -%}
+  {%- assign service = services.first -%}
+  <ul>
+  <li> 带领：{{ service.lead_singer }}</li>
+  {%- if service.vocals %}
+  <li> 伴唱：{{ service.vocals | join: "，"}}</li>
+  {%- endif %}
+  {%- if service.instrumentation %}
+  <li> 乐器：</li>
+  <ul>
+  {%- for instrument in service.instrumentation %}
+      <li> {{ instrument.instrument }}：{{ instrument.player }}</li>
+  {%- endfor -%}
+  </ul>
+  {%- endif %}
+  <!-- <li> 曲目：</li>
+  <ul>
+  {%- for song in service.songs -%}
+  {%- assign this_song = site.data.songs | where: "name", song -%}
+  {%- if this_song.first.sheet_type -%}
+      {%- capture sheet_link -%}
+          http://pz2c5nkyy.bkt.clouddn.com/{{ this_song.first.key | url_encode}}-{{ this_song.first.name | url_encode | replace: "+", "%20" }}-{{ this_song.first.sheet_type | url_encode }}.jpg
+      {%- endcapture %}
+      <li> [{{ song }}]({{ sheet_link }})</li>
+  {%- else %}
+      <li> {{ song }}</li>
+  {%- endif -%}
+  {%- endfor -%}
+  </ul> -->
+  </ul>
+  {%- for service_song in service.songs -%}
+
+      {%- for song in site.data.songs -%}
+          {%- if song.name == service_song -%}
+              {%- if song.sheet_type -%}
+                  {%- capture sheet_link -%}
+                  http://pz2c5nkyy.bkt.clouddn.com/{{ song.key | url_encode}}-{{ song.name | url_encode | replace: "+", "%20" }}-{{ song.sheet_type | url_encode }}.jpg
+                  {%- endcapture -%}
+                  <img src="{{ sheet_link }}" alt="{{ service_song}}">
+                  <!-- ![{{ service_song }}]({{ sheet_link }}) -->
+              {%- else -%}
+                  [ 似乎没有 {{ song.name }} 的谱子！]
+              {%- endif -%}
+              {%- break -%}
+          {%- endif -%}
+      {%- endfor -%}
+
+  {% endfor %}
+</div>

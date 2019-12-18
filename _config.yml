@@ -1,0 +1,8 @@
+baseurl: /lego-songbook
+description: Dwell in the house of the Lord.
+highlighter: rouge
+plugins:
+- jekyll-feed
+title: The Lego Songbook
+url: https://kipyin.github.io/
+version: 2019.12.1
