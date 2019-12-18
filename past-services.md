@@ -4,8 +4,6 @@ layout: page
 permalink: /past-services/
 ---
 
-[主日敬拜](#主日敬拜) * [特别活动](#特别活动)
-
 
 ### 主日敬拜
 
