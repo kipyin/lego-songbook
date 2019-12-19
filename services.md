@@ -1,17 +1,17 @@
 ---
 title: 敬拜安排
 layout: page
-permalink: /past-services/
+permalink: /services/
 ---
 
 
 ### 主日敬拜
 
-{%- assign past_services = site.data.past_services | sort: "date" | reverse -%}
+{%- assign services = site.data.services | sort: "date" | reverse -%}
 
-{% for service in past_services %}
+{% for service in services %}
 
-#### [{{ service.date }}]({{ site.baseurl }}/past-services/{{ service.date }}.html)
+#### [{{ service.date }}]({{ site.baseurl }}/services/{{ service.date }}.html)
 
 + 带领：{{ service.lead_singer }}
 {%- if service.vocals %}
