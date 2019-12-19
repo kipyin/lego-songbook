@@ -1,5 +1,5 @@
 ---
-title: 以往敬拜
+title: 敬拜安排
 layout: page
 permalink: /past-services/
 ---
