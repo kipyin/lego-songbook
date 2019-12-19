@@ -4,10 +4,10 @@ title: 所有音乐
 permalink: /all-songs/
 ---
 
-{% assign song_by_name = site.data.songs | sort: "name" %}
+<!-- {% assign song_by_name = site.data.songs | sort: "name" %} -->
 | Name | Key | Sheet | 圣诗精选 |
 |:---:|:---:|:---:|:---:|
-{% for song in song_by_name -%}
+{% for song in site.data.songs -%}
 
 {%- capture sheet_link -%}
 http://pz2c5nkyy.bkt.clouddn.com/{{ song.key | url_encode}}-{{ song.name | url_encode | replace: "+", "%20" }}-{{ song.sheet_type | url_encode }}.jpg
