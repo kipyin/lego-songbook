@@ -42,13 +42,21 @@ layout: default
           {%- if song.name == service_song -%}
               {%- if song.sheet_type -%}
                   {%- capture sheet_link -%}
-                  http://pz2c5nkyy.bkt.clouddn.com/{{ song.key | url_encode}}-{{ song.name | url_encode | replace: "+", "%20" }}-{{ song.sheet_type | url_encode }}.jpg
-                  {%- endcapture -%}
-                  <img src="{{ sheet_link }}" alt="{{ service_song}}">
+http://q2rlew7xm.bkt.clouddn.com/{{ song.name | url_encode | replace: "+", "%20" }}.{{ song.sheet_type | url_encode }}                  {%- endcapture -%}
+                  <!-- <p><a href="{{ sheet_link }}"><img src="{{ sheet_link }}" alt="{{ service_song}}"></a></p> -->
                   <!-- ![{{ service_song }}]({{ sheet_link }}) -->
-              {%- else -%}
-                  [ 似乎没有 {{ song.name }} 的谱子！]
-              {%- endif -%}
+                  {%- if song.sheet_type == "pdf" -%}
+                  <object data="{{ sheet_link }}" type="application/pdf" width="750" height="970">
+  <p>{{ service_song }} - include a link <a href="{{ sheet_link }}">to the PDF!</a></p>
+</object>
+                  {%- else -%}
+                  <p><a href="{{ sheet_link }}"><img src="{{ sheet_link }}" alt="{{ service_song}}"></a></p>
+                  {%- endif -%}
+              {%- else %}
+
+                  [ 暂时还没有 《{{ song.name }}》的谱子 ]
+
+              {% endif -%}
               {%- break -%}
           {%- endif -%}
       {%- endfor -%}

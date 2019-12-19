@@ -10,7 +10,7 @@ permalink: /all-songs-by-key/
 {% for song in songs -%}
 
 {%- capture sheet_link -%}
-http://pz2c5nkyy.bkt.clouddn.com/{{ song.key | url_encode}}-{{ song.name | url_encode | replace: "+", "%20" }}-{{ song.sheet_type | url_encode }}.jpg
+http://q2rlew7xm.bkt.clouddn.com/{{ song.name | url_encode | replace: "+", "%20" }}.{{ song.sheet_type | url_encode }}
 {%- endcapture -%}
 
 {%- capture hymn_link -%}
@@ -28,5 +28,5 @@ http://pz2c5nkyy.bkt.clouddn.com/{{ song.key | url_encode}}-{{ song.name | url_e
     {%- endif -%}
 {%- endcapture -%}
 
-| {{ song.name }} | {{ song.key }} | [{{ song.sheet_type }}]({{ sheet_link }}) | {{ hymn_link }} |
+| {{ song.name }} | {{ song.key }} | [{{ song.sheet_type | upcase }}]({{ sheet_link }}) | {{ hymn_link }} |
 {% endfor %}
