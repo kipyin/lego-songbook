@@ -5,13 +5,11 @@ permalink: /services/
 ---
 
 
-### 主日敬拜
-
 {%- assign services = site.data.services | sort: "date" | reverse -%}
 
 {% for service in services %}
 
-#### [{{ service.date }}]({{ site.baseurl }}/services/{{ service.date }}.html)
+### [{{ service.date }}]({{ site.baseurl }}/services/{{ service.date }}.html)
 
 + 带领：{{ service.lead_singer }}
 {%- if service.vocals %}
@@ -36,7 +34,3 @@ http://q2rlew7xm.bkt.clouddn.com/{{ this_song.first.name | url_encode | replace:
 {%- endif -%}
 {%- endfor -%}
 {%- endfor %}
-
-### 特别活动
-
-#### 十一营会（2019年10月2日～2019年10月4日）
