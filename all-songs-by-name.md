@@ -5,7 +5,7 @@ permalink: /all-songs-by-name/
 ---
 
 {% assign songs = site.data.songs %}
-| [Name]({{ site.baseurl }}/all-songs-by-name/) | [Key]({{ site.baseurl }}/all-songs-by-key/) | Sheet | 诗歌本 |
+| [名称]({{ site.baseurl }}/all-songs-by-name/) | [曲调]({{ site.baseurl }}/all-songs-by-key/) | 歌谱 | 诗歌本 |
 |:---:|:---:|:---:|:---:|
 {% for song in songs -%}
 
