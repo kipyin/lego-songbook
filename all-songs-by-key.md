@@ -1,13 +1,13 @@
 ---
-layout: page
+layout: page-hidden
 title: 所有音乐
-permalink: /all-songs/
+permalink: /all-songs-by-key/
 ---
 
-<!-- {% assign song_by_name = site.data.songs | sort: "name" %} -->
-| Name | Key | Sheet | 圣诗精选 |
+{% assign songs = site.data.songs_by_key %}
+| [Name]({{ site.baseurl }}/all-songs-by-name/) | [Key]({{ site.baseurl }}/all-songs-by-key/) | Sheet | 诗歌本 |
 |:---:|:---:|:---:|:---:|
-{% for song in site.data.songs -%}
+{% for song in songs -%}
 
 {%- capture sheet_link -%}
 http://pz2c5nkyy.bkt.clouddn.com/{{ song.key | url_encode}}-{{ song.name | url_encode | replace: "+", "%20" }}-{{ song.sheet_type | url_encode }}.jpg
