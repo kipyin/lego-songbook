@@ -136,6 +136,19 @@
       - 你的爱
       - 一粒麦子
 
+- date: 2019-12-21
+  lead_singer: 小凯
+  instrumentation:
+      - instrument: 键盘
+        player: 淼姐
+      - instrument: 鼓
+        player: 颐天
+  songs:
+      - 平安夜
+      - 有一位神
+      - 你爱永不变
+      - 赐福于你
+
 - date: 2019-12-22
   lead_singer: 泽峰
   instrumentation:
