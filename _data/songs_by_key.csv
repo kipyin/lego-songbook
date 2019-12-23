@@ -1,5 +1,6 @@
-name,key,hymn,sheet_type
+name,key,hymn_ref,sheet_type
 求主借异象感动我,,--,
+安静,C,,png
 彩虹下的约定,C,--,pdf
 恩典之流,C,--,pdf
 救赎的恩典,C,--,pdf
@@ -14,6 +15,7 @@ name,key,hymn,sheet_type
 爱，我愿意,D,385,pdf
 把冷漠变成爱,D,391,pdf
 除你以外,D,--,pdf
+赐福与你,D,,pdf
 当我赞美,D,--,pdf
 恩典的记号,D,--,pdf
 和平之子,D,--,JPG
@@ -22,7 +24,7 @@ name,key,hymn,sheet_type
 你的爱,D,--,pdf
 全然向你,D,371,pdf
 如鹿渴慕溪水,D,251,JPG
-他诚然担当,Bm,--,
+他诚然担当,Bm,--,png
 万国都要来赞美主,D,272,JPG
 我心切切渴慕你,D,--,pdf
 耶稣！耶稣！,Bm,--,png
@@ -30,7 +32,7 @@ name,key,hymn,sheet_type
 有一位神,D,375,pdf
 云上太阳,D,397,
 展开清晨的翅膀,D,--,pdf
-中国的早晨五点钟,D,191,
+中国的早晨五点钟,D,191,png
 主你是我最知心的朋友,D,--,JPG
 最知心的朋友,D,186,
 单单敬拜,Eb,--,JPG
@@ -40,11 +42,11 @@ name,key,hymn,sheet_type
 我要爱慕你,E,--,pdf
 耶和华是爱,E,365,JPG
 一生的选择,E,--,
-I Believe,F,--,pdf
 爱 喜乐 生命,F,376,pdf
 恩典之路,F,--,pdf
-马槽歌,F,19,
-你是荣耀君王,F,255,
+I Believe,F,--,pdf
+马槽歌,F,19,jpg
+你是荣耀的君王,F,255,jpg
 你坐着为王,Dm,--,pdf
 倾听我的心,F,--,pdf
 我们爱戴的王,F,--,pdf
@@ -61,8 +63,8 @@ I Believe,F,--,pdf
 尽情的敬拜,G,--,pdf
 立定心志,G,--,pdf
 能不能,G,--,pdf
+你爱永不变,G,,gif
 你是配得（圣哉圣哉全地唱）,G,--,pdf
-你是荣耀的君王,G,--,jpg
 你是我的平安,G,291,png
 亲眼见你,G,--,pdf
 让赞美飞扬,G,372,pdf

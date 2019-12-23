@@ -1,11 +1,13 @@
-name,key,hymn,sheet_type
+name,key,hymn_ref,sheet_type
 爱 喜乐 生命,F,376,pdf
 爱，我愿意,D,385,pdf
+安静,C,,png
 把冷漠变成爱,D,391,pdf
 宝贵十架,A,--,pdf
 彩虹下的约定,C,--,pdf
 充满在这里,A,--,pdf
 除你以外,D,--,pdf
+赐福与你,D,,pdf
 单单敬拜,Eb,--,JPG
 当我赞美,D,--,pdf
 恩典的记号,D,--,pdf
@@ -21,14 +23,14 @@ I Believe,F,--,pdf
 来吧，我们赞美,C,--,pdf
 来充满我,D,--,pdf
 立定心志,G,--,pdf
-马槽歌,F,19,
+马槽歌,F,19,jpg
 满有能力,Bb,--,pdf
 能不能,G,--,pdf
+你爱永不变,G,,gif
 你的爱,D,--,pdf
 你的爱不离不弃,F#m,--,pdf
 你是配得（圣哉圣哉全地唱）,G,--,pdf
-你是荣耀的君王,G,--,jpg
-你是荣耀君王,F,255,
+你是荣耀的君王,F,255,jpg
 你是我的平安,G,291,png
 你真伟大,Bb,--,pdf
 你坐着为王,Dm,--,pdf
@@ -45,10 +47,10 @@ I Believe,F,--,pdf
 深深爱你,E,--,pdf
 圣灵请你来充满我心,G,--,pdf
 使命,C,--,jpg
-他诚然担当,Bm,--,
+他诚然担当,Bm,--,png
 万国都要来赞美主,D,272,JPG
 委身之歌,E,--,jpg
-唯有耶稣,H,--,pdf
+唯有耶稣,G,--,pdf
 我不知明天的道路,Bb,145,JPG
 我的一生在你手中,Bb,--,pdf
 我们爱戴的王,F,--,pdf
@@ -78,7 +80,7 @@ I Believe,F,--,pdf
 赞美中遇见你,C,--,pdf
 展开清晨的翅膀,D,--,pdf
 这世代,G,--,pdf
-中国的早晨五点钟,D,191,
+中国的早晨五点钟,D,191,png
 主你是我最知心的朋友,D,--,JPG
 主耶稣我爱你,F,50,
 主，我邀请你,Dm,292,png
