@@ -28,5 +28,5 @@ http://q2rlew7xm.bkt.clouddn.com/{{ song.name | url_encode | replace: "+", "%20"
     {%- endif -%}
 {%- endcapture -%}
 
-| {{ song.name }} | {{ song.key }} | [{{ song.sheet_type | upcase }}]({{ sheet_link }}) | <!-- {{ hymn_link }} | -->
+| {{ song.name }} | {{ song.key }} | [{{ song.sheet_type | upcase }}]({{ sheet_link }}) |
 {% endfor %}
