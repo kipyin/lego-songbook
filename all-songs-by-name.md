@@ -10,7 +10,7 @@ permalink: /all-songs-by-name/
 {% for song in songs -%}
 
 {%- capture sheet_link -%}
-http://q2rlew7xm.bkt.clouddn.com/{{ song.name | url_encode | replace: "+", "%20" }}.{{ song.sheet_type | url_encode }}
+{{ site.sheet_link }}{{ song.name | url_encode | replace: "+", "%20" }}.{{ song.sheet_type | url_encode }}
 {%- endcapture -%}
 
 {%- capture hymn_link -%}
