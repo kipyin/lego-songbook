@@ -3,6 +3,7 @@ description: Dwell in the house of the Lord.
 highlighter: rouge
 plugins:
 - jekyll-feed
-title: The Lego Songbook
+title: Lego Songbook
 url: https://kipyin.github.io/
-version: 2019.12.2
+version: 2019.12.3
+sheet_link: http://q2rlew7xm.bkt.clouddn.com/
