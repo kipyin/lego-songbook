@@ -46,9 +46,7 @@ http://q2rlew7xm.bkt.clouddn.com/{{ song.name | url_encode | replace: "+", "%20"
                   <!-- <p><a href="{{ sheet_link }}"><img src="{{ sheet_link }}" alt="{{ service_song}}"></a></p> -->
                   <!-- ![{{ service_song }}]({{ sheet_link }}) -->
                   {%- if song.sheet_type == "pdf" -%}
-                  <object data="{{ sheet_link }}" type="application/pdf" width="100%" height="100%">
-  <p>{{ service_song }} - include a link <a href="{{ sheet_link }}">to the PDF!</a></p>
-</object>
+                  <object data="{{ sheet_link }}" type="application/pdf" width="100%" height="100%"><p><a href="{{ sheet_link }}">{{ service_song }}</a></p></object>
                   {%- else -%}
                   <p><a href="{{ sheet_link }}"><img src="{{ sheet_link }}" alt="{{ service_song}}"></a></p>
                   {%- endif -%}
