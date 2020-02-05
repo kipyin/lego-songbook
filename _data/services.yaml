@@ -174,3 +174,23 @@
       - 我们爱戴的王
       - 能不能
       - 如鹰展翅上腾
+
+- date: 2020-01-05
+  lead_singer: 淼姐
+  instrumentation:
+      - instrument: 键盘
+        player: 淼姐
+  songs:
+      - 宝贵十架
+      - 全然为你
+      - 我的一生在你手中
+
+- date: 2020-01-12
+  lead_singer: 文清
+  instrumentation:
+      - instrument: 键盘
+        player: 颐天
+  songs:
+      - 将天敞开
+      - 爱，我愿意
+      - 我心属你
