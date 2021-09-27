@@ -1,6 +1,7 @@
 ---
 layout: page
-title: 所有音乐
+title: Songbook
+subtitle: 我们唱过的所有歌曲都在这里了
 permalink: /all-songs-by-name/
 ---
 

@@ -1,5 +1,5 @@
 ---
-layout: page-hidden
+layout: page
 title: 所有音乐
 permalink: /all-songs-by-key/
 ---
