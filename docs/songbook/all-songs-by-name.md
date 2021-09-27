@@ -6,7 +6,7 @@ permalink: /all-songs-by-name/
 ---
 
 {% assign songs = site.data.songs %}
-| [名称]({{ site.baseurl }}/all-songs-by-name/) | [曲调]({{ site.baseurl }}/all-songs-by-key/) | 歌谱 |
+| 名称 | 曲调 | 歌谱 |
 |:---:|:---:|:---:|
 {% for song in songs -%}
 

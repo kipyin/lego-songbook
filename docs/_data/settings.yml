@@ -9,9 +9,9 @@ header_settings:
 menu_settings:
   menu_items:
     - title: 'SONGBOOK'
-      url: '/all-songs-by-name'
+      url: '/song/'
     - title: 'BLOG'
-      url: '/blogs/'
+      url: '/blog/'
     - title: 'OnSong指南'
       url: '/'
 
