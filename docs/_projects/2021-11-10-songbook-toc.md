@@ -1,9 +1,11 @@
 ---
-layout: page
+layout: project
 title: Songbook
 permalink: /song/
+featured_image: stefany-andrade-GbSCAAsU2Fo-unsplash.jpg
+gallery_images:
+  - stefany-andrade-GbSCAAsU2Fo-unsplash.jpg
 ---
-![](/images/stefany-andrade-GbSCAAsU2Fo-unsplash.jpg)
 
 👏🏼 欢迎来到乐高曲库 🎉
 

@@ -10,10 +10,8 @@ menu_settings:
   menu_items:
     - title: 'SONGBOOK'
       url: '/song/'
-    - title: 'BLOG'
-      url: '/blog/'
-    - title: 'OnSong指南'
-      url: '/'
+#    - title: 'BLOG'
+#      url: '/blog/'
 
 footer_settings:
   logo_image: 
