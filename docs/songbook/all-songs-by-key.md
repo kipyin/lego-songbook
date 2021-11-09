@@ -1,10 +1,10 @@
 ---
 layout: page
 title: 所有音乐
-permalink: /all-songs-by-name/
+permalink: /all-songs-by-key/
 ---
 
-{% assign songs = site.data.songs %}
+{% assign songs = site.data.songs_by_key %}
 | [名称]({{ site.baseurl }}/all-songs-by-name/) | [曲调]({{ site.baseurl }}/all-songs-by-key/) | 歌谱 |
 |:---:|:---:|:---:|
 {% for song in songs -%}

@@ -1,0 +1,26 @@
+<section class="about">
+  {% if include.divider == true %}
+    <div class="wrap"><hr/></div>
+    {% endif %}
+  <div class="wrap grid">
+
+    <div class="about__image">
+      <img src="{{ '/images/profile.jpg' | relative_url }}" alt="">
+
+      {% include component-socials.html %}
+    </div>
+
+    <div class="about__content">
+      <h2 class="title">Hey, we are Lego Worship, nice to meet you!</h2>
+      <p class="subtitle subtitle--light">We are a group of passionate Christians pursuing our vision and callings.
+      </p>
+
+      <p>My skills include product design, interactive design, aesthetic art direction, prototyping, mobile design,
+        branding, front-end development and team leadership. I’m interested in clean aesthetics, minimalism, unusual
+        typography, photography and simplistic UX solutions.</p>
+      <p>We'd love to learn about your feedback and see how we can improve, feel free to email us!</p>
+
+      <a href="#" class="cta button--fill contact-trigger js-contact">Get in Touch</a>
+    </div>
+  </div>
+</section>

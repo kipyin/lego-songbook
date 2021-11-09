@@ -1,11 +1,12 @@
 ---
-layout: page-hidden
-title: 所有音乐
-permalink: /all-songs-by-key/
+layout: page
+title: Songbook
+subtitle: 我们唱过的所有歌曲都在这里了
+permalink: /all-songs-by-name/
 ---
 
-{% assign songs = site.data.songs_by_key %}
-| [名称]({{ site.baseurl }}/all-songs-by-name/) | [曲调]({{ site.baseurl }}/all-songs-by-key/) | 歌谱 |
+{% assign songs = site.data.songs %}
+| 名称 | 曲调 | 歌谱 |
 |:---:|:---:|:---:|
 {% for song in songs -%}
 

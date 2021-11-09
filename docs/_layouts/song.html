@@ -7,7 +7,10 @@ layout: default
 		
 		<div class="wrap">
 			<h1 class="post__title">{{ page.title }}</h1>
-			<time class="post__date label">{{ page.date | date_to_long_string }}</time>
+			<h2 class="post__subtitle subtitle--light">{{ page.artist }}</h2>
+			<h2 class="post__subtitle subtitle--light">Key of {{ page.key }}</h2>
+			<h2 class="post__subtitle subtitle--light">{{ page.tempo }} BPM in {{ page.signature }} </h2>
+<!--			<time class="post__date label">{{ page.date | date_to_long_string }}</time>-->
 		</div>
 
 		<img src="{{ page.featured_image | relative_url }}" class="post__featured-image">
