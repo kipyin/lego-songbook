@@ -45,7 +45,7 @@ featured_image: /images/social.jpg
 					<p class="project__description --small">
 						{{ project.description }}
 						<a href="{{ project.url | relative_url }}" class="project__link button--text --right"
-							style="color: {{ accent_color }}; --color-var: {{ accent_color }}">View Case Study</a>
+							style="color: {{ accent_color }}; --color-var: {{ accent_color }}">View</a>
 					</p>
 				</div>
 			</article>
@@ -56,20 +56,20 @@ featured_image: /images/social.jpg
 
 <!--	{% include section__about.html %}-->
 
-	<section class="recent-posts">
-		<div class="wrap grid">
-			<header class="recent-posts__header">
-				<h4>Recent blog posts</h4>
-				<a href="{{ '/blog' | relative_url }}" class="action button--text--accent --right">All Posts</a>
-			</header>
+<!--	<section class="recent-posts">-->
+<!--		<div class="wrap grid">-->
+<!--			<header class="recent-posts__header">-->
+<!--				<h4>Recent blog posts</h4>-->
+<!--				<a href="{{ '/blog' | relative_url }}" class="action button&#45;&#45;text&#45;&#45;accent &#45;&#45;right">All Posts</a>-->
+<!--			</header>-->
 
-			<div class="recent-posts__list grid">
-				{% for post in site.posts limit: 3 %}
-				{% include component__post-preview.html %}
-				{% endfor %}
-			</div>
+<!--			<div class="recent-posts__list grid">-->
+<!--				{% for post in site.posts limit: 3 %}-->
+<!--				{% include component__post-preview.html %}-->
+<!--				{% endfor %}-->
+<!--			</div>-->
 
-			<a href="{{ '/blog' | relative_url }}" class="action-bottom button--text--accent --right">All Posts</a>
-		</div>
-	</section>
+<!--			<a href="{{ '/blog' | relative_url }}" class="action-bottom button&#45;&#45;text&#45;&#45;accent &#45;&#45;right">All Posts</a>-->
+<!--		</div>-->
+<!--	</section>-->
 </div>
