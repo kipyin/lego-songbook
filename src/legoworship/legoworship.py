@@ -7,10 +7,19 @@ import attr
 
 
 @attr.s(auto_attribs=True)
+class Song:
+    """A song."""
+
+    title: str
+    original_key: str = None
+    bpm: int = None
+
+
+@attr.s(auto_attribs=True)
 class SongList:
     """List of songs."""
 
-    songs: List[str]
+    songs: List[Song]
 
     @classmethod
     def from_csv(cls: "SongList", csv_file_path: str) -> "SongList":
@@ -23,7 +32,7 @@ class SongList:
             A `SongList` instance.
 
         Raises:
-            ValueError: if the csv header is incorrect.
+            ValueError: raise if the csv header is incorrect.
 
         # noqa: DAR101 cls
         """
@@ -36,7 +45,7 @@ class SongList:
                     if "name" not in row.keys():
                         raise ValueError(f"Invalid csv header: {row.keys()}")
                 else:
-                    songs.append(row["name"])
+                    songs.append(Song(title=row["name"], original_key=row["key"]))
                 line_count += 1
         return cls(songs=songs)
 
