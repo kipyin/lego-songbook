@@ -33,9 +33,9 @@ class Song:
 
         Examples:
             >>> Song("歌曲").pinyin_title
-            ["Ge", "Qu"]
+            ['Ge', 'Qu']
             >>> Song("歌曲 a song").pinyin_title
-            ["Ge", "Qu", "A", "Song"]
+            ['Ge', 'Qu', 'A', 'Song']
 
         Returns:
             A list of each character's pinyin
