@@ -39,7 +39,7 @@ def install_with_constraints(session: Session, *args: str, **kwargs: Any) -> Non
 
 
 @nox.session(python=python_versions)
-def tests(session: Session) -> None:
+def tests(session: Session) -> None:  # noqa: DAR101
     """Run the test suite."""
     session.install(".")
     install_with_constraints(
@@ -59,7 +59,7 @@ def tests(session: Session) -> None:
 
 
 @nox.session
-def coverage(session: Session) -> None:
+def coverage(session: Session) -> None:  # noqa: DAR101
     """Produce the coverage report."""
     args = session.posargs if session.posargs and len(session._runner.manifest) == 1 else []
     install_with_constraints(session, "invoke", "coverage[toml]")
@@ -67,7 +67,7 @@ def coverage(session: Session) -> None:
 
 
 @nox.session(python=python_versions)
-def mypy(session: Session) -> None:
+def mypy(session: Session) -> None:  # noqa: DAR101
     """Type-check using mypy."""
     session.install(".")
     install_with_constraints(session, "invoke", "mypy")
@@ -75,7 +75,7 @@ def mypy(session: Session) -> None:
 
 
 @nox.session(python="3.10")
-def safety(session: Session) -> None:
+def safety(session: Session) -> None:  # noqa: DAR101
     """Scan dependencies for insecure packages."""
     install_with_constraints(session, "invoke", "safety")
     session.run("inv", "safety")
