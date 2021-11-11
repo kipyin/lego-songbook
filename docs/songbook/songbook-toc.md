@@ -26,5 +26,3 @@ permalink: /song/
 [comment]: <> (或者，你可以了解一下)
 
 [comment]: <> (* 敬拜主领经常带的歌曲)
-
-
