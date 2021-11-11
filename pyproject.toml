@@ -38,6 +38,7 @@ lego = 'legoworship.cli:main'
 python = "<3.11,>=3.7"
 
 click = "^8.0.3"
+attrs = "^21.2.0"
 
 
 [tool.poetry.dev-dependencies]
