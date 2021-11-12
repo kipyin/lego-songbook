@@ -184,3 +184,10 @@ def version(c, part, dry_run=False):
     """Bump version."""
     bump_options = ["--dry-run"] if dry_run else []
     _run(c, f"poetry run bump2version {' '.join(bump_options)} {part}")
+
+
+@task()
+def serve(c):
+    # type: (Context) -> None
+    """Serve the site locally."""
+    _run(c, f"cd {DOCS_DIR}\nbundle exec jekyll serve")
