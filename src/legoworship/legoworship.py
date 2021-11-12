@@ -2,7 +2,7 @@
 
 import csv
 from pathlib import Path
-from typing import ClassVar, List, Optional, Sequence, Type, TypeVar
+from typing import ClassVar, List, Optional, Sequence, Type, TypeVar, Union
 
 import attr
 from pypinyin import lazy_pinyin
@@ -126,6 +126,33 @@ class SongList:
                         }
                     )
             return True
+
+    def _add_song(self: S, song: Song) -> bool:
+        """Add a song to the list."""
+        if isinstance(song, Song):
+            self.songs.append(song)
+            return True
+        else:
+            raise ValueError(f"Cannot add {song} ({type(song)}) to the song list.")
+
+    def _add_song_list(self: S, songlist: "SongList") -> bool:
+        """Add another song list to this song list."""
+        if isinstance(songlist, SongList):
+            self.songs = self.songs + songlist.songs
+            return True
+        else:
+            raise ValueError(f"Cannot add {songlist} ({type(songlist)}) to the song list.")
+
+    def add(self: S, songs: Union[Song, "SongList"]) -> bool:
+        """Add another song or songlist to the song list."""
+        if isinstance(songs, Song):
+            self._add_song(songs)
+            return True
+        elif isinstance(songs, SongList):
+            self._add_song_list(songs)
+            return True
+        else:
+            raise ValueError(f"Cannot add {songs} ({type(songs)}) to the song list.")
 
     @classmethod
     def from_csv(cls: Type[S], csv_file_path: str, legacy: bool = False) -> S:
