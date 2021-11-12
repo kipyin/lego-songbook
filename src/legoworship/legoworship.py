@@ -2,7 +2,7 @@
 
 import csv
 from pathlib import Path
-from typing import ClassVar, List, TypeVar
+from typing import ClassVar, List, Optional, Type, TypeVar
 
 import attr
 from pypinyin import lazy_pinyin
@@ -12,7 +12,7 @@ from pypinyin import lazy_pinyin
 PINYIN_ADJUSTMENTS = {ord("祢"): "nǐ,mí"}
 
 
-T = TypeVar("T")
+T = TypeVar("T", bound="Song")
 
 
 @attr.s(auto_attribs=True)
@@ -20,10 +20,10 @@ class Song:
     """A song."""
 
     title: str
-    original_key: str = None
-    bpm: int = None
-    lyricist: str = None
-    composer: str = None
+    original_key: Optional[str] = None
+    bpm: Optional[int] = None
+    lyricist: Optional[str] = None
+    composer: Optional[str] = None
 
     @property
     def pinyin_title(self: T) -> List[str]:
@@ -41,6 +41,9 @@ class Song:
             A list of each character's pinyin
         """
         return [pinyin.title() for pinyin in lazy_pinyin(self.title.split(" "))]
+
+
+S = TypeVar("S", bound="SongList")
 
 
 @attr.s(auto_attribs=True)
@@ -62,7 +65,7 @@ class SongList:
         """Sort function (by the pinyin title) used in self.sort()."""
         return song.pinyin_title
 
-    def sort(self: T, by: str, desc: bool = False, legacy: bool = False) -> T:
+    def sort(self: S, by: str, desc: bool = False, legacy: bool = False) -> "SongList":
         """Order the list by any of the header item.
 
         Args:
@@ -88,7 +91,7 @@ class SongList:
         sorted_songs = sorted(self.songs, key=sort_func, reverse=desc)
         return SongList(name=self.name, songs=sorted_songs)
 
-    def export_csv(self: T, to: str, legacy: bool = False) -> bool:
+    def export_csv(self: S, to: str, legacy: bool = False) -> bool:
         """Export the songlist to a csv file."""
         filenames = self._LEGACY_HEADER if legacy else self._HEADER
         with open(to, "w") as csv_file:
@@ -118,7 +121,7 @@ class SongList:
             return True
 
     @classmethod
-    def from_csv(cls: T, csv_file_path: str, legacy: bool = False) -> T:
+    def from_csv(cls: Type[S], csv_file_path: str, legacy: bool = False) -> S:
         """Generate a `SongList` instance from csv file.
 
         Args:
