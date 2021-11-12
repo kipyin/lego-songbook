@@ -48,3 +48,12 @@ def test_songlist_sort_by_pinyin_title_asc() -> None:
     song_1 = Song(title="第一首")
     song_2 = Song(title="第二首")
     assert SongList(name="Test", songs=[song_1, song_2]).sort(by="title").songs == [song_2, song_1]
+
+
+def test_songlist_sort_by_key() -> None:
+    """Sorts a song list by key."""
+    song_1 = Song(title="A", original_key="A")
+    song_2 = Song(title="B", original_key="B")
+    assert [song_1, song_2] == SongList(name="Test", songs=[song_1, song_2]).sort(
+        by="original_key"
+    ).songs

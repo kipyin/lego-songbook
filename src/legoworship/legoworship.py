@@ -2,7 +2,7 @@
 
 import csv
 from pathlib import Path
-from typing import ClassVar, List, Optional, Type, TypeVar
+from typing import ClassVar, List, Optional, Sequence, Type, TypeVar
 
 import attr
 from pypinyin import lazy_pinyin
@@ -61,9 +61,14 @@ class SongList:
     songs: List[Song]
 
     @staticmethod
-    def _sort_by_pinyin_title(song: Song) -> List[str]:
+    def _sort_by_pinyin_title(song: Song) -> Sequence[str]:
         """Sort function (by the pinyin title) used in self.sort()."""
         return song.pinyin_title
+
+    @staticmethod
+    def _sort_by_original_key(song: Song) -> Optional[str]:
+        """Sort function (by the song's key) used in self.sort()."""
+        return song.original_key
 
     def sort(self: S, by: str, desc: bool = False, legacy: bool = False) -> "SongList":
         """Order the list by any of the header item.
@@ -83,6 +88,8 @@ class SongList:
         if (legacy and by in self._LEGACY_HEADER) or (not legacy and by in self._HEADER):
             if by == "title":
                 sort_func = self._sort_by_pinyin_title
+            elif by in ["key", "original_key"]:
+                sort_func = self._sort_by_original_key
             else:
                 raise NotImplementedError(f"Sorting by {by} is not supported.")
         else:
