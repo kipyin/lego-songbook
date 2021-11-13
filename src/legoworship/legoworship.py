@@ -56,7 +56,7 @@ class SongList:
     """
 
     _LEGACY_HEADER: ClassVar[List[str]] = ["name", "key", "hymn_ref", "sheet_type"]
-    _HEADER: ClassVar[List[str]] = ["title", "original_key", "bpm", "lyricist", "composer"]
+    _HEADER: ClassVar[List[str]] = ["title", "original_key", "lyricist", "composer"]
     name: str
     songs: List[Song]
 
@@ -120,7 +120,6 @@ class SongList:
                         {
                             "title": song.title,
                             "original_key": song.original_key,
-                            "bpm": song.bpm,
                             "lyricist": song.lyricist,
                             "composer": song.composer,
                         }
