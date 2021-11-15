@@ -7,5 +7,5 @@ permalink: /song/by-name/
 
 {% assign songs = site.data.songs %}
 {% for song in songs -%}
-- {{ song.name }} - {{ song.key }} 
+- [{{ song.name }}]({{ site.baseurl }}/song/{{ song.name }}/) - {{ song.key }} 
 {% endfor %}

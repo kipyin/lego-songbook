@@ -11,7 +11,7 @@ gallery_images:
 
 我们每周唱过的歌曲都会更新在这里，方便大家来查看参考。你可以：
 
-* [点击查看全部歌曲]({{ site.baseurl }}/all-songs-by-name/)
+* [点击查看全部歌曲]({{ site.baseurl }}/song/by-name/)
   
 但是我们觉得，
 
