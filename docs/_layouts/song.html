@@ -7,10 +7,10 @@ layout: default
 		
 		<div class="wrap">
 			<h1 class="post__title">{{ page.title }}</h1>
-			<h2 class="post__subtitle subtitle--light">{{ page.artist }}</h2>
-			<h2 class="post__subtitle subtitle--light">Key of {{ page.key }}</h2>
-			<h2 class="post__subtitle subtitle--light">{{ page.tempo }} BPM in {{ page.signature }} </h2>
-<!--			<time class="post__date label">{{ page.date | date_to_long_string }}</time>-->
+			{% if page.alternative_titles %}<h2 class="post__subtitle subtitle--light">{{ page.alternative_titles }}</h2>{% endif %}
+			{% if page.lyricist %}<h2 class="post__subtitle subtitle--light">词：{{ page.lyricist }}</h2>{% endif %}
+			{% if page.composer %}<h2 class="post__subtitle subtitle--light">曲：{{ page.composer }}</h2>{% endif %}
+			{% if page.original_key %}<h2 class="post__subtitle subtitle--light">原调：{{ page.original_key }}</h2>{% endif %}
 		</div>
 
 		<img src="{{ page.featured_image | relative_url }}" class="post__featured-image">
@@ -22,15 +22,28 @@ layout: default
 		<div class="wrap">
 
 			<article class="post__content {% if page.highlight_first %}highlight-first{% endif %}">
-				{{ page.content }}
+				{% for song in site.data.song_details %}
+				{% if song.title == page.title %}
+				{% if song.lyrics %}
+				<h4>歌词</h4>
+				{% for part in song.lyrics %}
+				<p><strong>{{ part.section }}</strong></p><br />
+				{% part.content %}
+				{% for c in part.content %}<p>{{ c }}</p><br />{% endfor %}
+				{% endfor %}
+				{% endif %}
+				{% break %}
+				{% endif %}
+				{% endfor %}
+<!--				{{ content }}-->
 			</article>
 
 			<div class="post__more grid">
 				{% if page.previous.url %}
-				<a class="prev-post subtitle" href="{{ page.previous.url | relative_url }}">{{page.previous.title}}</a>
+					<a class="prev-post subtitle" href="{{ page.previous.url | relative_url }}">{{page.previous.title}}</a>
 				{% endif %}
 				{% if page.next.url %}
-				<a class="next-post subtitle" href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a>
+					<a class="next-post subtitle" href="{{ page.next.url | relative_url }}">{{ page.next.title }}</a>
 				{% endif %}
 			</div>
 
