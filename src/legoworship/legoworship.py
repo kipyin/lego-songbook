@@ -36,7 +36,7 @@ class Song:
     title: str
     alternative_titles: Optional[List[str]] = None
     original_key: Optional[str] = None
-    bpm: Optional[int] = None
+    bpm: Optional[int] = None  # deprecate
     lyricist: Optional[str] = None
     composer: Optional[str] = None
     resources: Optional[List["SongResource"]] = None
@@ -107,10 +107,7 @@ class Song:
                             location=os.path.join(root, file),
                         )
                     )
-        if self.resources:
-            return True
-        else:
-            return False
+        return True if self.resources else False
 
     def check_page_exists(self: T, page_dir: str) -> bool:
         """Check if the song's page exists in `page_dir`."""
@@ -127,6 +124,7 @@ class Song:
             else:
                 raise ValueError(f"Song page for {self.title} already exists.")
         os.mkdir(os.path.join(page_dir, self.title, ".md"))
+        return True
 
 
 S = TypeVar("S", bound="SongList")
