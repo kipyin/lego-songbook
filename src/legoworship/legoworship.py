@@ -62,7 +62,7 @@ class Song:
     @property
     def alternative_title_string(self: T) -> str:
         """Combine all alternative titles into one string."""
-        return " / ".join(self.alternative_titles)
+        return " / ".join(self.alternative_titles or [])
 
     def match_file(self: T, filename: str, extensions: List[str]) -> bool:
         """Match if a filename contains the searched title or one of the extensions."""
@@ -140,7 +140,13 @@ class SongList:
     """
 
     _LEGACY_HEADER: ClassVar[List[str]] = ["name", "key", "hymn_ref", "sheet_type"]
-    _HEADER: ClassVar[List[str]] = ["title", "original_key", "lyricist", "composer"]
+    _HEADER: ClassVar[List[str]] = [
+        "title",
+        "original_key",
+        "alternative_titles",
+        "lyricist",
+        "composer",
+    ]
     name: str
     songs: List[Song]
 
@@ -203,12 +209,17 @@ class SongList:
                     csv_writer.writerow(
                         {
                             "title": song.title,
+                            "alternative_titles": song.alternative_title_string,
                             "original_key": song.original_key,
                             "lyricist": song.lyricist,
                             "composer": song.composer,
                         }
                     )
             return True
+
+    def export_song_info(self: S, to: str) -> bool:
+        """Export song resources and lyrics to docs/_data/song_info.yaml."""
+        return True
 
     def _add_song(self: S, song: Song) -> bool:
         """Add a song to the list."""
@@ -342,14 +353,16 @@ def find_multiple(what: str, path: str, song_list: SongList) -> Union[List[str],
 
 
 if __name__ == "__main__":
-    import subprocess  # noqa
-    from pprint import pprint
-
-    SHEET_LIB = "/Users/kip/Mercury/3.Ecclasia/4. 灵栖清泉"
-    MUSIC_LIB = "/Volumes/music"
+    # import subprocess  # noqa
+    # from pprint import pprint
+    #
+    # SHEET_LIB = "/Users/kip/Mercury/3.Ecclasia/4. 灵栖清泉"
+    # MUSIC_LIB = "/Volumes/music"
+    # song_list = SongList.from_csv(csv_file_path="docs/_data/all_songs.csv", legacy=False)
+    # song = song_list.songs[-2]
+    # pprint(f"Song: {song.title}")
+    # song.find_resources("sheet", library=SHEET_LIB, extension=".pdf")
+    # pprint([x.location for x in song.resources])
+    # subprocess.Popen('open "{song.resources[0].location}"', shell=True)  # noqa
     song_list = SongList.from_csv(csv_file_path="docs/_data/all_songs.csv", legacy=False)
-    song = song_list.songs[-2]
-    pprint(f"Song: {song.title}")
-    song.find_resources("sheet", library=SHEET_LIB, extension=".pdf")
-    pprint([x.location for x in song.resources])
-    subprocess.Popen('open "{song.resources[0].location}"', shell=True)  # noqa
+    song_list.sort(by="title").export_csv(to="docs/_data/songs.csv")
