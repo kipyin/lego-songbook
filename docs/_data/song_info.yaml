@@ -2,7 +2,7 @@
   resources:
     - type: sheet
       location: /library/sheet/爱中不惧怕.png
-      performer: IHOP
+      artist: IHOP
       album: 着迷
       key: F
       bpm: 60
@@ -37,6 +37,6 @@
   resrouces:
     - type: sheet
       location: /library/sheet/安静.png
-      performer: 约书亚乐团 Joshua Band
+      artist: 约书亚乐团 Joshua Band
       key: C
       bpm: 66

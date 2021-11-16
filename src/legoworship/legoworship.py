@@ -4,9 +4,10 @@ import csv
 import os
 from pathlib import Path
 from string import Template
-from typing import ClassVar, Dict, List, Optional, Sequence, Type, TypeVar, Union
+from typing import Any, ClassVar, Dict, List, Mapping, Optional, Sequence, Type, TypeVar, Union
 
 import attr
+import yaml
 from pypinyin import lazy_pinyin
 
 # The default pinyin order for "祢" is "mí" first and then "nǐ", which is not
@@ -26,6 +27,35 @@ composer: $composer
 """
 )
 
+
+@attr.s(auto_attribs=True)
+class SongResource:
+    """A music sheet or a media file for a song.
+
+    Args:
+        song: A `Song` instance linked to this resource.
+        resource_type: either "sheet" or "media".
+        location: the path pointing to the resource file.
+        bpm: the beats per minutes (tempo) of the resource.
+        key: the musical key of the resource.
+        artist: the artist of the resource.
+        album: the album of the resource.
+    """
+
+    EXTENSIONS: ClassVar[Dict[str, List[str]]] = {
+        "sheet": [".png", ".pdf"],
+        "media": [".mp3", ".m4a", ".wav"],
+    }
+
+    # song: "Song"
+    resource_type: str  # "sheet" or "media"
+    location: str
+    bpm: Optional[int] = None
+    key: Optional[str] = None
+    artist: Optional[str] = None
+    album: Optional[str] = None
+
+
 T = TypeVar("T", bound="Song")
 
 
@@ -36,11 +66,10 @@ class Song:
     title: str
     alternative_titles: Optional[List[str]] = None
     original_key: Optional[str] = None
-    bpm: Optional[int] = None  # deprecate
     lyricist: Optional[str] = None
     composer: Optional[str] = None
-    resources: Optional[List["SongResource"]] = None
-    lyrics: Optional[str] = None
+    resources: Optional[List[SongResource]] = None
+    lyrics: Optional[Mapping[str, str]] = None
 
     @property
     def pinyin_title(self: T) -> List[str]:
@@ -108,6 +137,31 @@ class Song:
                         )
                     )
         return True if self.resources else False
+
+    def load_song_info(self: T, from_: str) -> bool:
+        """Load a song_info.yaml into self.resources and self.lyrics."""
+        with open(from_, "r") as yaml_file:
+            song_info_list: Sequence[Mapping[str, Any]] = yaml.safe_load(yaml_file)
+        for song_info in song_info_list:
+            if self.title == song_info["title"]:
+                if "lyrics" in song_info and song_info["lyrics"]:
+                    self.lyrics = song_info["lyrics"]
+                if "resources" in song_info and song_info["resources"]:
+                    song_info_resources = song_info["resources"]
+                    self.resources = self.resources or []
+                    for resource in song_info_resources:
+                        self.resources.append(
+                            SongResource(
+                                resource_type=resource["type"],
+                                location=resource["location"],
+                                artist=resource["artist"],
+                                album=resource["album"],
+                                key=resource["key"],
+                                bpm=resource["bpm"],
+                            )
+                        )
+                break
+        return self.resources
 
     def check_page_exists(self: T, page_dir: str) -> bool:
         """Check if the song's page exists in `page_dir`."""
@@ -282,34 +336,6 @@ class SongList:
         return cls(name=Path(csv_file_path).name, songs=songs)
 
 
-@attr.s(auto_attribs=True)
-class SongResource:
-    """A music sheet or a media file for a song.
-
-    Args:
-        song: A `Song` instance linked to this resource.
-        resource_type: either "sheet" or "media".
-        location: the path pointing to the resource file.
-        bpm: the beats per minutes (tempo) of the resource.
-        key: the musical key of the resource.
-        artist: the artist of the resource.
-        album: the album of the resource.
-    """
-
-    EXTENSIONS: ClassVar[Dict[str, List[str]]] = {
-        "sheet": [".png", ".pdf"],
-        "media": [".mp3", ".m4a", ".wav"],
-    }
-
-    song: Song
-    resource_type: str  # "sheet" or "media"
-    location: str
-    bpm: Optional[int] = None
-    key: Optional[str] = None
-    performer: Optional[str] = None
-    album: Optional[str] = None
-
-
 def find(title: str, what: str, path: str) -> Union[List[str], bool]:
     """Find a song in path."""
     if what not in ["sheet", "media"]:
@@ -364,5 +390,8 @@ if __name__ == "__main__":
     # song.find_resources("sheet", library=SHEET_LIB, extension=".pdf")
     # pprint([x.location for x in song.resources])
     # subprocess.Popen('open "{song.resources[0].location}"', shell=True)  # noqa
-    song_list = SongList.from_csv(csv_file_path="docs/_data/all_songs.csv", legacy=False)
-    song_list.sort(by="title").export_csv(to="docs/_data/songs.csv")
+    song_list = SongList.from_csv(csv_file_path="docs/_data/songs.csv", legacy=False)
+    # song_list.sort(by="title").export_csv(to="docs/_data/songs.csv")
+    song = song_list.songs[1]
+    print(f"{song.title}: {song.load_song_info(from_='docs/_data/song_info.yaml')}")
+    print(f"{song.lyrics}")
