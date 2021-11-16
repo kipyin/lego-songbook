@@ -131,17 +131,17 @@ class Song:
                 if self.match_file(filename=file, extensions=search_extensions):
                     self.resources.append(
                         SongResource(
-                            song=self,
+                            # song=self,
                             resource_type=resource_type,
                             location=os.path.join(root, file),
                         )
                     )
         return True if self.resources else False
 
-    def load_song_info(self: T, from_: str) -> bool:
+    def load_info_from_list(
+        self: T, song_info_list: Sequence[Mapping[str, Any]]
+    ) -> Optional[bool]:
         """Load a song_info.yaml into self.resources and self.lyrics."""
-        with open(from_, "r") as yaml_file:
-            song_info_list: Sequence[Mapping[str, Any]] = yaml.safe_load(yaml_file)
         for song_info in song_info_list:
             if self.title == song_info["title"]:
                 if "lyrics" in song_info and song_info["lyrics"]:
@@ -275,6 +275,14 @@ class SongList:
         """Export song resources and lyrics to docs/_data/song_info.yaml."""
         return True
 
+    def load_info_from_yaml(self: S, from_: str) -> bool:
+        """Load song info from song_info.yaml."""
+        with open(from_, "r") as stream:
+            song_info_list = yaml.safe_load(stream)
+        for song in self.songs:
+            song.load_info_from_list(song_info_list)
+        return True
+
     def _add_song(self: S, song: Song) -> bool:
         """Add a song to the list."""
         if isinstance(song, Song):
@@ -380,7 +388,8 @@ def find_multiple(what: str, path: str, song_list: SongList) -> Union[List[str],
 
 if __name__ == "__main__":
     # import subprocess  # noqa
-    # from pprint import pprint
+    from pprint import pprint
+
     #
     # SHEET_LIB = "/Users/kip/Mercury/3.Ecclasia/4. 灵栖清泉"
     # MUSIC_LIB = "/Volumes/music"
@@ -393,5 +402,5 @@ if __name__ == "__main__":
     song_list = SongList.from_csv(csv_file_path="docs/_data/songs.csv", legacy=False)
     # song_list.sort(by="title").export_csv(to="docs/_data/songs.csv")
     song = song_list.songs[1]
-    print(f"{song.title}: {song.load_song_info(from_='docs/_data/song_info.yaml')}")
-    print(f"{song.lyrics}")
+    pprint(f"{song_list.load_info_from_yaml(from_='docs/_data/song_info.yaml')}")
+    pprint(song_list.songs)
