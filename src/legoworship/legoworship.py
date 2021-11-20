@@ -56,7 +56,7 @@ class SongResource:
     album: Optional[str] = None
 
 
-T = TypeVar("T", bound="Song")
+SongType = TypeVar("SongType", bound="Song")
 
 
 @attr.s(auto_attribs=True)
@@ -72,7 +72,7 @@ class Song:
     lyrics: Optional[Mapping[str, str]] = None
 
     @property
-    def pinyin_title(self: T) -> List[str]:
+    def pinyin_title(self: SongType) -> List[str]:
         """Return the title in pinyin.
 
         Each letter is capitalized, to sort with English titles.
@@ -89,11 +89,11 @@ class Song:
         return [pinyin.title() for pinyin in lazy_pinyin(self.title.split(" "))]
 
     @property
-    def alternative_title_string(self: T) -> str:
+    def alternative_title_string(self: SongType) -> str:
         """Combine all alternative titles into one string."""
         return " / ".join(self.alternative_titles or [])
 
-    def match_file(self: T, filename: str, extensions: List[str]) -> bool:
+    def match_file(self: SongType, filename: str, extensions: List[str]) -> bool:
         """Match if a filename contains the searched title or one of the extensions."""
         if self.title in filename:
             for extension in extensions:
@@ -102,7 +102,7 @@ class Song:
         return False
 
     def find_resources(
-        self: T, resource_type: str, library: str, extension: Optional[str] = None
+        self: SongType, resource_type: str, library: str, extension: Optional[str] = None
     ) -> bool:
         """Find and build song resources.
 
@@ -139,7 +139,7 @@ class Song:
         return True if self.resources else False
 
     def load_info_from_list(
-        self: T, song_info_list: Sequence[Mapping[str, Any]]
+        self: SongType, song_info_list: Sequence[Mapping[str, Any]]
     ) -> Optional[bool]:
         """Load a song_info.yaml into self.resources and self.lyrics."""
         for song_info in song_info_list:
@@ -163,14 +163,26 @@ class Song:
                 break
         return self.resources
 
-    def check_page_exists(self: T, page_dir: str) -> bool:
+    @property
+    def info(self: SongType) -> Dict:
+        """Song info."""
+        song_info = dict()
+        song_info["title"] = self.title
+        if self.resources:
+            song_info["resources"] = [attr.asdict(r) for r in self.resources]
+        else:
+            song_info["resources"] = None
+        song_info["lyrics"] = self.lyrics or None
+        return song_info
+
+    def check_page_exists(self: SongType, page_dir: str) -> bool:
         """Check if the song's page exists in `page_dir`."""
         # TODO: first should check if `page_dir` exists.
         if not os.path.isdir(page_dir):
             raise ValueError(f"{page_dir} is not a valid page directory.")
         return os.path.isfile(os.path.join(page_dir, self.title, ".md"))
 
-    def create_page(self: T, page_dir: str, quiet: bool = False) -> bool:
+    def create_page(self: SongType, page_dir: str, quiet: bool = False) -> bool:
         """Create a song's page if it does not exist."""
         if self.check_page_exists(page_dir):
             if quiet:
@@ -181,7 +193,7 @@ class Song:
         return True
 
 
-S = TypeVar("S", bound="SongList")
+SongListType = TypeVar("SongListType", bound="SongList")
 
 
 @attr.s(auto_attribs=True)
@@ -214,7 +226,7 @@ class SongList:
         """Sort function (by the song's key) used in self.sort()."""
         return song.original_key
 
-    def sort(self: S, by: str, desc: bool = False, legacy: bool = False) -> "SongList":
+    def sort(self: SongListType, by: str, desc: bool = False, legacy: bool = False) -> "SongList":
         """Order the list by any of the header item.
 
         Args:
@@ -242,7 +254,7 @@ class SongList:
         sorted_songs = sorted(self.songs, key=sort_func, reverse=desc)
         return SongList(name=self.name, songs=sorted_songs)
 
-    def export_csv(self: S, to: str, legacy: bool = False) -> bool:
+    def export_csv(self: SongListType, to: str, legacy: bool = False) -> bool:
         """Export the songlist to a csv file."""
         filenames = self._LEGACY_HEADER if legacy else self._HEADER
         with open(to, "w") as csv_file:
@@ -271,11 +283,28 @@ class SongList:
                     )
             return True
 
-    def export_song_info(self: S, to: str) -> bool:
+    def export_song_info(self: SongListType, to: str) -> bool:
         """Export song resources and lyrics to docs/_data/song_info.yaml."""
+        song_info_list = []
+        for song in self.songs:
+            song_info_list.append(song.info)
+        with open(to, "w") as stream:
+            yaml.dump(
+                song_info_list,
+                stream=stream,
+                allow_unicode=True,
+                sort_keys=False,
+                default_flow_style=False,
+            )
         return True
 
-    def load_info_from_yaml(self: S, from_: str) -> bool:
+    def info(self: SongListType) -> List:
+        """Song info list."""
+        # song_info_list = []
+        # for song in self.songs:
+        #     song_info_list
+
+    def load_info_from_yaml(self: SongListType, from_: str) -> bool:
         """Load song info from song_info.yaml."""
         with open(from_, "r") as stream:
             song_info_list = yaml.safe_load(stream)
@@ -283,7 +312,7 @@ class SongList:
             song.load_info_from_list(song_info_list)
         return True
 
-    def _add_song(self: S, song: Song) -> bool:
+    def _add_song(self: SongListType, song: Song) -> bool:
         """Add a song to the list."""
         if isinstance(song, Song):
             self.songs.append(song)
@@ -291,7 +320,7 @@ class SongList:
         else:
             raise ValueError(f"Cannot add {song} ({type(song)}) to the song list.")
 
-    def _add_song_list(self: S, songlist: "SongList") -> bool:
+    def _add_song_list(self: SongListType, songlist: "SongList") -> bool:
         """Add another song list to this song list."""
         if isinstance(songlist, SongList):
             self.songs = self.songs + songlist.songs
@@ -299,7 +328,7 @@ class SongList:
         else:
             raise ValueError(f"Cannot add {songlist} ({type(songlist)}) to the song list.")
 
-    def add(self: S, songs: Union[Song, "SongList"]) -> bool:
+    def add(self: SongListType, songs: Union[Song, "SongList"]) -> bool:
         """Add another song or songlist to the song list."""
         if isinstance(songs, Song):
             self._add_song(songs)
@@ -311,7 +340,9 @@ class SongList:
             raise ValueError(f"Cannot add {songs} ({type(songs)}) to the song list.")
 
     @classmethod
-    def from_csv(cls: Type[S], csv_file_path: str, legacy: bool = False) -> S:
+    def from_csv(
+        cls: Type[SongListType], csv_file_path: str, legacy: bool = False
+    ) -> SongListType:
         """Generate a `SongList` instance from csv file.
 
         Args:
@@ -402,5 +433,5 @@ if __name__ == "__main__":
     song_list = SongList.from_csv(csv_file_path="docs/_data/songs.csv", legacy=False)
     # song_list.sort(by="title").export_csv(to="docs/_data/songs.csv")
     song = song_list.songs[1]
-    pprint(f"{song_list.load_info_from_yaml(from_='docs/_data/song_info.yaml')}")
-    pprint(song_list.songs)
+    song_list.load_info_from_yaml(from_="docs/_data/song_info.yaml")
+    pprint(song_list.export_song_info(to="docs/_data/song_info_test.yaml"))
