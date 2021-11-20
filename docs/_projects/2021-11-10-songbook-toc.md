@@ -2,7 +2,6 @@
 layout: project
 title: Songbook
 permalink: /song/
-featured_image: stefany-andrade-GbSCAAsU2Fo-unsplash.jpg
 gallery_images:
   - stefany-andrade-GbSCAAsU2Fo-unsplash.jpg
 ---
