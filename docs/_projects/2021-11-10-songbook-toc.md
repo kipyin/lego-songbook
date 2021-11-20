@@ -2,7 +2,6 @@
 layout: project
 title: Songbook
 permalink: /song/
-featured_image: stefany-andrade-GbSCAAsU2Fo-unsplash.jpg
 gallery_images:
   - stefany-andrade-GbSCAAsU2Fo-unsplash.jpg
 ---
@@ -13,11 +12,11 @@ gallery_images:
 
 * [点击查看全部歌曲]({{ site.baseurl }}/song/by-name/)
   
-但是我们觉得，
+[comment]: <> (但是我们觉得，)
 
-* [按照曲调查看歌曲]({{ site.baseurl }}/all-songs-by-key/)
+[comment]: <> (* [按照曲调查看歌曲]&#40;{{ site.baseurl }}/all-songs-by-key/&#41;)
 
-更方便。
+[comment]: <> (更方便。)
 
 [comment]: <> (当然，你也可以从其他维度查看歌曲：)
 
