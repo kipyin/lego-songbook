@@ -1,7 +1,7 @@
 
 [tool.poetry]
 name = "legoworship"
-version = "2021.11.2"
+version = "2021.11.3"
 description = "A website for our beloved Lego small group."
 authors = ["Kip Yin <28321392+kipyin@users.noreply.github.com>"]
 

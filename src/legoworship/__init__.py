@@ -2,6 +2,6 @@
 
 __author__ = """Kip Yin"""
 __email__ = "28321392+kipyin@users.noreply.github.com"
-__version__ = "2021.11.2"
+__version__ = "2021.11.3"
 
 from .legoworship import Song, SongList  # noqa: F401

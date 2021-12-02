@@ -7,6 +7,8 @@ and this project adheres to [Calendar Versioning](https://calver.org/).
 
 ## [Unreleased]
 
+## [2021.11.3] - 2021-12-03
+
 ## [2021.11.2] - 2021-11-20
 
 ## [2021.11.1] - 2021-11-20
@@ -15,7 +17,8 @@ and this project adheres to [Calendar Versioning](https://calver.org/).
 ### Added
 - First release.
 
-[Unreleased]: https://github.com/kipyin/lego-manager/compare/v2021.11.2...HEAD
+[Unreleased]: https://github.com/kipyin/lego-manager/compare/v2021.11.3...HEAD
+[2021.11.3]: https://github.com/kipyin/lego-manager/compare/v2021.11.2...v2021.11.3
 [2021.11.2]: https://github.com/kipyin/lego-manager/compare/v2021.11.1...v2021.11.2
 [2021.11.1]: https://github.com/kipyin/lego-manager/compare/v2021.11.0...v2021.11.1
 [2021.11.0]: https://github.com/kipyin/lego-manager/compare/releases/tag/v2021.11.0
