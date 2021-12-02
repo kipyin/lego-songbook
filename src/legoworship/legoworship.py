@@ -39,6 +39,10 @@ class Song:
     bpm: Optional[int] = None  # deprecate
     lyricist: Optional[str] = None
     composer: Optional[str] = None
+    artist: Optional[str] = None
+    album: Optional[str] = None
+    tempo: Optional[int] = None
+    year: Optional[int] = None
     resources: Optional[List["SongResource"]] = None
     lyrics: Optional[str] = None
 
@@ -146,6 +150,10 @@ class SongList:
         "alternative_titles",
         "lyricist",
         "composer",
+        "artist",
+        "album",
+        "tempo",
+        "year",
     ]
     name: str
     songs: List[Song]
@@ -213,6 +221,10 @@ class SongList:
                             "original_key": song.original_key,
                             "lyricist": song.lyricist,
                             "composer": song.composer,
+                            "artist": song.artist,
+                            "album": song.album,
+                            "tempo": song.tempo,
+                            "year": song.year,
                         }
                     )
             return True
