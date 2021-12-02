@@ -9,14 +9,24 @@ layout: default
 			<h1 class="post__title">{{ page.title }}</h1>
 			{% for song in site.data.songs %}
 			{% if song.title == page.title %}
-			{% if song.alternative_titles %}<h5>{{ song.alternative_titles }}</h5>{% endif %}
-			{% if song.lyricist %}<h5>词：{{ song.lyricist }}</h5>{% endif %}
-			{% if song.composer %}<h5>曲：{{ song.composer }}</h5>{% endif %}
+			{% if song.alternative_titles %}<h4>{{ song.alternative_titles }}</h4>{% endif %}
+			{% if song.artist %}<h5>{{ song.artist }}</h5>{% endif %}
+			{% if song.album %}<h5>《{{ song.album }}》{% if song.year %}（{{ song.year }}）{% endif %}</h5>{% endif %}
 			{% if song.original_key %}<h5>原调：{{ song.original_key }}</h5>{% endif %}
 			{% if song.tempo %}<h5>速度：{{ song.tempo }}</h5>{% endif %}
-			{% if song.artist %}<h5>艺术家：{{ song.artist }}</h5>{% endif %}
-			{% if song.album %}<h5>专辑：{{ song.album }}</h5>{% endif %}
-			{% if song.year %}<h5>年份：{{ song.year }}</h5>{% endif %}
+			
+			{% if song.lyricist and song.composer %}
+				{% if song.lyricist == song.composer %}
+					<h5>词曲：{{ song.lyricist }}</h5>
+				{% else %}
+					<h5>词：{{ song.lyricist }}</h5>
+					<h5>曲：{{ song.lyricist }}</h5>
+				{% endif %}
+			{% else %}
+				{% if song.lyricist %}<h5>词：{{ song.lyricist }}</h5>{% endif %}
+				{% if song.composer %}<h5>曲：{{ song.composer }}</h5>{% endif %}
+			{% endif %}
+					
 			{% break %}
 			{% endif %}
 			{% endfor %}
