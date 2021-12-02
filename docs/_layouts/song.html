@@ -9,10 +9,14 @@ layout: default
 			<h1 class="post__title">{{ page.title }}</h1>
 			{% for song in site.data.songs %}
 			{% if song.title == page.title %}
-			{% if song.alternative_titles %}<h2 class="post__subtitle subtitle--light">{{ song.alternative_titles }}</h2>{% endif %}
-			{% if song.lyricist %}<h2 class="post__subtitle subtitle--light">词：{{ song.lyricist }}</h2>{% endif %}
-			{% if song.composer %}<h2 class="post__subtitle subtitle--light">曲：{{ song.composer }}</h2>{% endif %}
-			{% if song.original_key %}<h2 class="post__subtitle subtitle--light">原调：{{ song.original_key }}</h2>{% endif %}
+			{% if song.alternative_titles %}<h5>{{ song.alternative_titles }}</h5>{% endif %}
+			{% if song.lyricist %}<h5>词：{{ song.lyricist }}</h5>{% endif %}
+			{% if song.composer %}<h5>曲：{{ song.composer }}</h5>{% endif %}
+			{% if song.original_key %}<h5>原调：{{ song.original_key }}</h5>{% endif %}
+			{% if song.tempo %}<h5>速度：{{ song.tempo }}</h5>{% endif %}
+			{% if song.artist %}<h5>艺术家：{{ song.artist }}</h5>{% endif %}
+			{% if song.album %}<h5>专辑：{{ song.album }}</h5>{% endif %}
+			{% if song.year %}<h5>年份：{{ song.year }}</h5>{% endif %}
 			{% break %}
 			{% endif %}
 			{% endfor %}
@@ -27,20 +31,22 @@ layout: default
 		<div class="wrap">
 
 			<article class="post__content {% if page.highlight_first %}highlight-first{% endif %}">
-				{% for song in site.data.song_info %}
-				{% if song.title == page.title %}
-				{% if song.lyrics %}
-				<h4>歌词</h4>
-				{% for part in song.lyrics %}
-				<p><strong>{{ part.section }}</strong></p><br />
-				{{ part.content }}
-<!--				{% for c in part.content %}<p>{{ c }}</p><br />{% endfor %}-->
-				{% endfor %}
-				{% endif %}
-				{% break %}
-				{% endif %}
-				{% endfor %}
-<!--				{{ content }}-->
+				{{ content }}
+
+<!--				{% for song in site.data.song_info %}-->
+<!--				{% if song.title == page.title %}-->
+<!--				{% if song.lyrics %}-->
+<!--				<h4>歌词</h4>-->
+<!--				{% for part in song.lyrics %}-->
+<!--				<p><strong>{{ part.section }}</strong></p><br />-->
+<!--				{{ part.content }}-->
+<!--&lt;!&ndash;				{% for c in part.content %}<p>{{ c }}</p><br />{% endfor %}&ndash;&gt;-->
+<!--				{% endfor %}-->
+<!--				{% endif %}-->
+<!--				{% break %}-->
+<!--				{% endif %}-->
+<!--				{% endfor %}-->
+
 			</article>
 
 			<div class="post__more grid">
