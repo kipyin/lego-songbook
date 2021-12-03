@@ -41,6 +41,7 @@ click = "^8.0.3"
 attrs = "^21.2.0"
 pypinyin = "^0.43.0"
 tablib = "^3.1.0"
+loguru = "^0.5.3"
 
 
 [tool.poetry.dev-dependencies]
@@ -107,6 +108,9 @@ pycodestyle = ["+*"]
 mccabe = ["+*"]
 "flake8-*" = ["+*"]
 darglint = ["+*"]
+
+[tool.flakehell.exceptions."src/"]
+flake8-logging-format = ['-G004']
 
 [tool.flakehell.exceptions."tests/"]
 flake8-bandit = ["-S101"]
