@@ -2,6 +2,10 @@
 layout: default
 ---
 <div class="page-post">
+	
+		{% if site.data.settings.hero_settings.background_image %}
+	<img src="{{ site.data.settings.hero_settings.background_image | relative_url }}" class="hero__background" draggable="false">
+	{% endif %}
 
 	<header class="post__header header--single">
 		
