@@ -1,7 +1,7 @@
 ---
 layout: song
 title: Hi Ne Ni
-permalink: /songbook/Hi Ne Ni
+permalink: /songbook/Hi+Ne+Ni
 ---
 
 #### 歌谱
