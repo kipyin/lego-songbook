@@ -1,7 +1,7 @@
 ---
 layout: song
 title: I Believe
-permalink: /songbook/I Believe
+permalink: /songbook/I+Believe
 ---
 
 #### 歌谱
@@ -9,5 +9,5 @@ permalink: /songbook/I Believe
 {% include post-components/gallery.html
     columns = 1
     full_width = true
-    images = "/library/sheet/I Believe（我相信）.png,"
+    images = "/library/sheet/I Believe/I Believe（我相信）.png,"
 %}

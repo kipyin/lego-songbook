@@ -1,7 +1,7 @@
 ---
 layout: song
 title: How Great Is Our God
-permalink: /songbook/How Great Is Our God
+permalink: /songbook/How+Great+Is+Our+God
 ---
 
 #### 歌谱
