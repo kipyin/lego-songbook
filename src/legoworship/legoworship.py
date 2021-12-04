@@ -26,10 +26,11 @@ permalink: /songbook/$title_url
 #### 歌谱
 
 {% include post-components/gallery.html
-    columns = 1
+    columns = $data_columns
     full_width = true
     images = "$sheet_links,"
 %}
+
 
 """
 )
@@ -92,6 +93,14 @@ class Song:
     def alternative_title_string(self: T) -> str:
         """Combine all alternative titles into one string."""
         return " / ".join(self.alternative_titles or [])
+
+    @property
+    def _data_columns(self: T) -> str:
+        """Return the number of columns to be displayed in the song page."""
+        if len(self.resources) <= 1:
+            return "1"
+        else:
+            return "2"
 
     def match_file(self: T, filename: str, extensions: List[str]) -> bool:
         """Match if a filename contains the searched title or one of the extensions."""
@@ -174,7 +183,7 @@ class Song:
             if resource.type_ == "sheet":
                 sheet_location = resource.location.replace("docs/", "/")
                 sheet_locations.append(sheet_location)
-        return ",".join(sheet_locations)
+        return ",".join(sorted(sheet_locations))
 
     def check_page_exists(self: T, page_dir: str) -> bool:
         """Check if the song's page exists in `page_dir`."""
@@ -196,7 +205,10 @@ class Song:
         with open(song_page, "w") as f:
             f.write(
                 SONG_PAGE_TEMPLATE.substitute(
-                    title=self.title, title_url=self.title_url, sheet_links=self._sheet_links
+                    title=self.title,
+                    title_url=self.title_url,
+                    sheet_links=self._sheet_links,
+                    data_columns=self._data_columns,
                 )
             )
         logger.debug(f"Successfully wrote song page {self.title}.")
