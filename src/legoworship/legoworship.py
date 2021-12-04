@@ -20,7 +20,7 @@ SONG_PAGE_TEMPLATE = Template(
     """---
 layout: song
 title: $title
-permalink: /songbook/$title
+permalink: /songbook/{{ $title | url_escape }}
 ---
 
 #### 歌谱
