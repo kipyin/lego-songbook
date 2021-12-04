@@ -20,7 +20,7 @@ SONG_PAGE_TEMPLATE = Template(
     """---
 layout: song
 title: $title
-permalink: /songbook/{{ $title | url_escape }}
+permalink: /songbook/$title_url
 ---
 
 #### 歌谱
@@ -30,6 +30,18 @@ permalink: /songbook/{{ $title | url_escape }}
     full_width = true
     images = "$sheet_links,"
 %}
+
+"""
+)
+
+SONG_PAGE_BLANK_TEMPLATE = Template(
+    """---
+layout: song
+title: $title
+permalink: /songbook/$title_url
+---
+
+抱歉，暂时还未收录这首歌的谱子。
 
 """
 )
@@ -70,6 +82,11 @@ class Song:
             A list of each character's pinyin
         """
         return [pinyin.title() for pinyin in lazy_pinyin(self.title.split(" "))]
+
+    @property
+    def title_url(self: T) -> str:
+        """Replace spaces in the title with `+`."""
+        return self.title.replace(" ", "+")
 
     @property
     def alternative_title_string(self: T) -> str:
@@ -118,7 +135,7 @@ class Song:
                     self.resources.append(
                         SongResource(
                             song=self,
-                            resource_type=resource_type,
+                            type_=resource_type,
                             location=os.path.join(root, file),
                         )
                     )
@@ -126,16 +143,24 @@ class Song:
             logger.warning(f"Resource for {self.title} is not found.")
         return True if self.resources else False
 
-    def move_resources(self: T, to: str, resource_type: str) -> bool:
+    def move_resources(self: T, to: str, resource_type: str, subfolder: bool = True) -> bool:
         """Move all resources of a song to a desired directory."""
         if not self.resources:
             return False
+        if subfolder:
+            destination = os.path.join(to, self.title)
+            try:
+                os.mkdir(destination)
+            except FileExistsError:
+                logger.debug(f"Sheet folder for {self.title} already existed.")
+        else:
+            destination = to
         for resource in self.resources:
-            if resource.resource_type == resource_type:
+            if resource.type_ == resource_type:
                 logger.debug(
-                    f"Copying song {resource.song.title} from {resource.location} to {to}."
+                    f"Copying song {resource.song.title} from {resource.location} to {destination}."  # noqa: E501
                 )
-                shutil.copy2(src=resource.location, dst=to)
+                shutil.copy2(src=resource.location, dst=destination)
         else:
             return True
 
@@ -146,7 +171,7 @@ class Song:
         if not self.resources:
             return ""
         for resource in self.resources:
-            if resource.resource_type == "sheet":
+            if resource.type_ == "sheet":
                 sheet_location = resource.location.replace("docs/", "/")
                 sheet_locations.append(sheet_location)
         return ",".join(sheet_locations)
@@ -160,16 +185,20 @@ class Song:
 
     def create_page(self: T, page_dir: str, quiet: bool = False) -> bool:
         """Create a song's page if it does not exist."""
-        if self.check_page_exists(page_dir):
-            error_message = f"Song page for {self.title} already exists."
-            if quiet:
-                logger.error(error_message)
-                return False
-            else:
-                raise ValueError(error_message)
+        # if self.check_page_exists(page_dir):
+        #     error_message = f"Song page for {self.title} already exists."
+        #     if quiet:
+        #         logger.error(error_message)
+        #         return False
+        #     else:
+        #         raise ValueError(error_message)
         song_page = os.path.join(page_dir, f"{self.title}.md")
-        with open(song_page, "a") as f:
-            f.write(SONG_PAGE_TEMPLATE.substitute(title=self.title, sheet_links=self._sheet_links))
+        with open(song_page, "w") as f:
+            f.write(
+                SONG_PAGE_TEMPLATE.substitute(
+                    title=self.title, title_url=self.title_url, sheet_links=self._sheet_links
+                )
+            )
         logger.debug(f"Successfully wrote song page {self.title}.")
         return True
 
@@ -311,19 +340,27 @@ class SongList:
             song.find_resources(resource_type, library, extension)
         return True
 
-    def move_resources(self: S, to: str, resource_type: str) -> bool:
+    def find_resources_in_subfolder(
+        self: S, resource_type: str, library: str, extension: Optional[str] = None
+    ) -> bool:
+        """Find resources for every song in the list."""
+        for song in self.songs:
+            song.find_resources(resource_type, os.path.join(library, song.title), extension)
+        return True
+
+    def move_resources(self: S, to: str, resource_type: str, subfolder: bool = True) -> bool:
         """Move all resources."""
         if not self.songs:
             return False
         for song in self.songs:
-            song.move_resources(to=to, resource_type=resource_type)
+            song.move_resources(to=to, resource_type=resource_type, subfolder=subfolder)
         else:
             return True
 
     def create_pages(self: S, page_dir: str, quiet: bool = False) -> bool:
         """Create a song page for all songs in the song list."""
         for song in self.songs:
-            song.create_page(page_dir, True)
+            song.create_page(page_dir=page_dir, quiet=quiet)
         return True
 
     @classmethod
@@ -346,17 +383,29 @@ class SongList:
         header = cls._LEGACY_HEADER if legacy else cls._HEADER
         with open(csv_file_path) as csv_file:
             csv_reader = csv.DictReader(csv_file)
-            line_count = 0
-            for row in csv_reader:
+            for line_count, row in enumerate(csv_reader):
                 if line_count == 0:
                     if list(row.keys()) != header:
                         raise ValueError(f"Invalid csv header: {row.keys()}")
-                else:
-                    if legacy:
-                        songs.append(Song(title=row["name"], original_key=row["key"]))
                     else:
-                        songs.append(Song(title=row["title"], original_key=row["original_key"]))
-                line_count += 1
+                        logger.debug("The csv header is correctly read.")
+                if legacy:
+                    songs.append(Song(title=row["name"], original_key=row["key"]))
+                else:
+                    songs.append(
+                        Song(
+                            title=row["title"],
+                            original_key=row["original_key"],
+                            alternative_titles=row["alternative_titles"],
+                            lyricist=row["lyricist"],
+                            composer=row["composer"],
+                            artist=row["artist"],
+                            album=row["album"],
+                            tempo=row["tempo"],
+                            year=row["year"],
+                        )
+                    )
+                    logger.debug(f"Added song {row['title']}")
         return cls(name=Path(csv_file_path).name, songs=songs)
 
 
@@ -366,7 +415,7 @@ class SongResource:
 
     Args:
         song: A `Song` instance linked to this resource.
-        resource_type: either "sheet" or "media".
+        type_: either "sheet" or "media".
         location: the path pointing to the resource file.
         bpm: the beats per minutes (tempo) of the resource.
         key: the musical key of the resource.
@@ -380,7 +429,7 @@ class SongResource:
     }
 
     song: Song
-    resource_type: str  # "sheet" or "media"
+    type_: str  # "sheet" or "media"
     location: str
     bpm: Optional[int] = None
     key: Optional[str] = None
@@ -439,15 +488,11 @@ if __name__ == "__main__":
     MUSIC_LIB = "/Volumes/music"
     DOCS_SHEET_LIB = "docs/library/sheet"
     song_list = SongList.from_csv(csv_file_path="docs/_data/songs.csv", legacy=False)
-    song_list.find_resources("sheet", DOCS_SHEET_LIB, "png")
+    song_list.find_resources_in_subfolder("sheet", DOCS_SHEET_LIB, "png")
     # song_list.move_resources(to="docs/library/sheet", resource_type="sheet")
-    # find_multiple("sheet", SHEET_LIB, song_list)
     # song = song_list.songs[-2]
     song_list.create_pages("docs/song/")
-    # pprint(f"Song: {song.title}")
     # song.find_resources("sheet", library=SHEET_LIB, extension=".png")
-    # song.move_resources(to="docs/library/sheet/")
-    # pprint([x.location for x in song.resources])
-    # subprocess.Popen('open "{song.resources[0].location}"', shell=True)  # noqa
+    # song.move_resources(to="docs/library/sheet/", resource_type="sheet")
     # song_list = SongList.from_csv(csv_file_path="docs/_data/all_songs.csv", legacy=False)
     # song_list.sort(by="title").export_csv(to="docs/_data/songs.csv")
